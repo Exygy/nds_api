@@ -13,9 +13,6 @@ module NdsApi
     #
     # @return [NdsApi::Client] a new client instance
 
-
-    # NdsApi::Client.new({user: 'exygy', password: 'SnowflakeFrog?'}).providers
-
     def initialize(options = {})
       @options = options.dup
       @http = NdsApi::Http.new(options)

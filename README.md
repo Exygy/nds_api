@@ -1,8 +1,6 @@
 # NdsApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/nds_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+NDS API is a Rubygem for easy interface with the NDS API. NDS is the National Data System for Child Care. NDS is a variety of applications and services that facilitate the work of Child Care R&Rs. This Ruby code is an interface to the new NDS API. This code is built and maintained by Exygy, in San Francisco. NDS is built by Child Care Aware of America. For any questions about using this code, please contact hello@exygy.com. For more information about NDS please see https://usa.childcareaware.org/members-providers/data-services/
 
 ## Installation
 
@@ -31,15 +29,20 @@ nds = NdsApi::Client.new(
 
 ##### CLIENT
 
-https://developer.uatup.naccrraware.net/#42d4c898-5868-19a8-0704-18235fa44a5e
+
+Create client
 
 ```ruby
 nds.create_client(data)
 ```
 
+Visit https://developer.uatup.naccrraware.net/#42d4c898-5868-19a8-0704-18235fa44a5e for fields
+
 ```ruby
 nds.update_client(data)
+```
 
+```ruby
 nds.clients
 nds.client_by_email(email)      
 nds.client_by_phone(phone)      
