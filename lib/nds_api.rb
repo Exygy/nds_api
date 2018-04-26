@@ -1,8 +1,3 @@
-require 'net/http'
-require 'uri'
-require 'open-uri'
-require 'json'
-
 require "nds_api/http"
 require "nds_api/url"
 require "nds_api/version"
@@ -45,15 +40,19 @@ module NdsApi
     end
 
     def method_split
-      @method_split ||= @method.split('_')
+      @method_split ||= method.split('_')
     end
 
     def is_create?
-      @method.include? 'create'
+      method.include? 'create'
     end
 
     def is_update?
-      @method.include? 'update'
+      method.include? 'update'
+    end
+
+    def method
+      @method_str ||= @method.to_s
     end
 
     def url
