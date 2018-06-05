@@ -35,7 +35,8 @@ module NdsApi
       req.basic_auth api_user, api_password
       # req.use_ssl = true
       req.body = data.to_json
-      Net::HTTP.new(url.host, url.port).request(req)
+      response = Net::HTTP.new(url.host, url.port).request(req)
+      JSON.parse(response.body)
     rescue => e
       puts "failed #{e}"
       return e

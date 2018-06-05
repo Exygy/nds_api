@@ -24,7 +24,7 @@ module NdsApi
       @method = NdsApi::Method.new(method)
       @args = *args
       response = http_action(method, *args, &block)
-      NdsApi::Utils.hash_keys_str_to_sym(JSON.parse(response.body))
+      NdsApi::Utils.hash_keys_str_to_sym(response)
     end
 
     private
