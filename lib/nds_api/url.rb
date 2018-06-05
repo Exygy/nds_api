@@ -65,12 +65,10 @@ module NdsApi
     ##### PROVIDERS #####
 
     def search_providers
-      stg_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
-      prod_search = 'http://www.google.com'
-
-      puts @prod ? prod_search : stg_search
-
-      @prod ? prod_search : stg_search
+      # stg_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
+      # prod_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
+      # @prod ? prod_search : stg_search
+      'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
     end
 
     def providers
@@ -146,8 +144,8 @@ module NdsApi
     end
 
     def base_url
-      sub_domain = @prod ? 'uatup' : 'developer.staging'
-      "https://#{sub_domain}.naccrraware.net/nds-api"
+      # sub_domain = @prod ? 'uatup' : 'developer.staging'
+      "https://uatup.naccrraware.net/nds-api"
     end
   end
 end
