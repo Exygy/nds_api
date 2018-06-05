@@ -33,9 +33,9 @@ module NdsApi
         'Content-Type' => 'application/json'
       )
       req.basic_auth api_user, api_password
-      req.use_ssl = true
-      req.form_data(data)
-      Net::HTTP.new(url.host, url.port).start{ |http| http.request(req) }
+      # req.use_ssl = true
+      req.body = data.to_json
+      Net::HTTP.new(url.host, url.port).request(req)
     rescue => e
       puts "failed #{e}"
       return e

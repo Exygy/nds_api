@@ -88,9 +88,10 @@ nds.positions_by_work_email(email)
 ##### PROVIDERS
 
 ```ruby
+nds.search_providers(search_params)
 nds.update_provider(data)
 
-nds.providers()      
+nds.providers()
 nds.provider_by_uid(uid)      
 nds.provider_by_id(id)      
 nds.providers_by_center_name(center_name)      

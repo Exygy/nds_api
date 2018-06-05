@@ -1,75 +1,46 @@
 require "nds_api/http"
+require "nds_api/method"
 require "nds_api/url"
+require "nds_api/utils"
 require "nds_api/version"
 
 module NdsApi
   class Client
-
     # Create a new client instance
     #
     # @param [Hash] options
     # @option options [String] :user NDS User
     # @option options [String] :password NDS Password
     #
-    # @return [NdsApi::Client] a new client instance
+    # @return [NdsApi::Client] new client instance
 
     def initialize(options = {})
       @options = options.dup
       @http = NdsApi::Http.new(options)
-      @url = NdsApi::Url
+      @url = NdsApi::Url.new(options)
     end
 
     def method_missing(method, *args, &block)
-      @method = method
-      if is_create? or is_update?
-        @args = args
-        @http.post(@url.send(url), data) if is_create?
-        @http.put(@url.send(url), data) if is_update?
-      else
-        @http.get(@url.send(method, *args, &block))
-      end
+      @method = NdsApi::Method.new(method)
+      @args = *args
+      response = http_action(method, *args, &block)
+      NdsApi::Utils.hash_keys_str_to_sym(JSON.parse(response.body))
     end
 
     private
 
+    def http_action(method, *args, &block)
+      if @method.is_create? or @method.is_search?
+        @http.post(@url.send(@method.action), data)
+      elsif @method.is_update?
+        @http.put(@url.send(@method.action), data)
+      else
+        @http.get(@url.send(method, *args))
+      end
+    end
+
     def data
-      @args[:data]
+      @args.include?(:data) ? @args[:data] : @args.first
     end
-
-    def method_split
-      @method_split ||= method.split('_')
-    end
-
-    def is_create?
-      method.include? 'create'
-    end
-
-    def is_update?
-      method.include? 'update'
-    end
-
-    def method
-      @method_str ||= @method.to_s
-    end
-
-    def url
-      method_split ||= @method.split('_')
-      action = method_split[0]
-      object_type =
-        case method_split[1]
-        when 'child'
-          'children'
-        when 'client'
-          'clients'
-        when 'referral'
-          'referrals'
-        when 'person'
-          'persons'
-        when 'provider'
-          'providers'
-        end
-      "#{action}_#{object_type}"
-    end
-
   end
 end

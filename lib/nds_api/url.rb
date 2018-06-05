@@ -1,141 +1,153 @@
 module NdsApi
-  module Url
-    class << self
-      ##### CLIENTS #####
+  class Url
+    def initialize(options = { dev: false })
+      @prod = !options[:dev]
+    end
 
-      def clients
-        "#{base_url}/clients"
-      end
+    ##### CLIENTS #####
 
-      def client_by_email(email)
-        "#{client_search}/findByEmail?email=#{email}"
-      end
+    def clients
+      "#{base_url}/clients"
+    end
 
-      def client_by_phone(phone)
-        "#{client_search}/findByPhone?phone=#{phone}"
-      end
+    def client_by_email(email)
+      "#{client_search}/findByEmail?email=#{email}"
+    end
 
-      def client_by_first_name_and_last_name(first_name, last_name)
-        "#{client_search}/findByName?lastName=#{last_name}&firstName=#{first_name}"
-      end
+    def client_by_phone(phone)
+      "#{client_search}/findByPhone?phone=#{phone}"
+    end
 
-      def client_by_id(id)
-        "#{clients}/#{id}"
-      end
+    def client_by_first_name_and_last_name(first_name, last_name)
+      "#{client_search}/findByName?lastName=#{last_name}&firstName=#{first_name}"
+    end
 
-      ##### CHILDREN #####
+    def client_by_id(id)
+      "#{clients}/#{id}"
+    end
 
-      def children
-        "#{base_url}/children"
-      end
+    ##### CHILDREN #####
 
-      def child_by_uid(uid)
-        "#{children}/#{uid}"
-      end
+    def children
+      "#{base_url}/children"
+    end
 
-      def children_by_client_id(client_id)
-        "#{base_url}/clients/#{client_id}/children"
-      end
+    def child_by_uid(uid)
+      "#{children}/#{uid}"
+    end
 
-      ##### COMMUNITIES #####
+    def children_by_client_id(client_id)
+      "#{base_url}/clients/#{client_id}/children"
+    end
 
-      def communities
-        "#{base_url}/communities?sort=lastModifiedTime,DESC"
-      end
+    ##### COMMUNITIES #####
 
-      ##### PERSON #####
+    def communities
+      "#{base_url}/communities?sort=lastModifiedTime,DESC"
+    end
 
-      def persons
-        "#{base_url}/persons"
-      end
+    ##### PERSON #####
 
-      def person_by_id(id)
-        "#{persons}/#{id}"
-      end
+    def persons
+      "#{base_url}/persons"
+    end
 
-      #### POSITIONS #####
+    def person_by_id(id)
+      "#{persons}/#{id}"
+    end
 
-      def positions_by_work_email(email)
-        "#{base_url}/positions/search/findByWorkEmail?workEmail=#{email}"
-      end
+    #### POSITIONS #####
 
-      ##### PROVIDERS #####
+    def positions_by_work_email(email)
+      "#{base_url}/positions/search/findByWorkEmail?workEmail=#{email}"
+    end
 
-      def providers
-        "#{base_url}/providers"
-      end
+    ##### PROVIDERS #####
 
-      def provider_by_uid(uid)
-        "#{base_url}/providers/#{uid}"
-      end
+    def search_providers
+      stg_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
+      prod_search = 'http://www.google.com'
 
-      def provider_by_id(id)
-        "#{base_url}/providers/search/findByProviderId?providerId=#{id}"
-      end
+      puts @prod ? prod_search : stg_search
 
-      def providers_by_center_name(center_name)
-        "#{provider_search}/findByCenterName?centerName=#{center_name}"
-      end
+      @prod ? prod_search : stg_search
+    end
 
-      def providers_by_email(email)
-        "#{provider_search}/findByEmail?email=#{email}"
-      end
+    def providers
+      "#{base_url}/providers"
+    end
 
-      def provider_schedule(uid)
-        "#{providers}/#{uid}/schedule"
-      end
+    def provider_by_uid(uid)
+      "#{base_url}/providers/#{uid}"
+    end
 
-      def provider_rates(uid)
-        "#{providers}/#{uid}/rates"
-      end
+    def provider_by_id(id)
+      "#{base_url}/providers/search/findByProviderId?providerId=#{id}"
+    end
 
-      def provider_enrollments(uid)
-        "#{providers}/#{uid}/enrollments"
-      end
+    def providers_by_center_name(center_name)
+      "#{provider_search}/findByCenterName?centerName=#{center_name}"
+    end
 
-      ##### REFERRALS #####
+    def providers_by_email(email)
+      "#{provider_search}/findByEmail?email=#{email}"
+    end
 
-      def referrals
-        "#{base_url}/referrals"
-      end
+    def provider_schedule(uid)
+      "#{providers}/#{uid}/schedule"
+    end
 
-      def referral_by_id(id)
-        "#{referrals}/#{id}"
-      end
+    def provider_rates(uid)
+      "#{providers}/#{uid}/rates"
+    end
 
-      def referral_by_client_id(id)
-        "#{clients}/#{id}/referrals"
-      end
+    def provider_enrollments(uid)
+      "#{providers}/#{uid}/enrollments"
+    end
 
-      def referrals_before_date(date)
-        "#{referral_search}/findByDateBefore?date=#{date}"
-      end
+    ##### REFERRALS #####
 
-      def referrals_after_date(date)
-        "#{referral_search}/findByDateAfter?date=#{date}"
-      end
+    def referrals
+      "#{base_url}/referrals"
+    end
 
-      def referrals_in_date_range(start_date, end_date)
-        "#{referral_search}/findByDateBetween?startDate=#{start_date}&endDate=#{end_date}"
-      end
+    def referral_by_id(id)
+      "#{referrals}/#{id}"
+    end
 
-      private
+    def referral_by_client_id(id)
+      "#{clients}/#{id}/referrals"
+    end
 
-      def client_search
-        "#{clients}/search"
-      end
+    def referrals_before_date(date)
+      "#{referral_search}/findByDateBefore?date=#{date}"
+    end
 
-      def provider_search
-        "#{providers}/search"
-      end
+    def referrals_after_date(date)
+      "#{referral_search}/findByDateAfter?date=#{date}"
+    end
 
-      def referral_search
-        "#{referrals}/search"
-      end
+    def referrals_in_date_range(start_date, end_date)
+      "#{referral_search}/findByDateBetween?startDate=#{start_date}&endDate=#{end_date}"
+    end
 
-      def base_url
-        'https://uatup.naccrraware.net/nds-api'
-      end
+    private
+
+    def client_search
+      "#{clients}/search"
+    end
+
+    def provider_search
+      "#{providers}/search"
+    end
+
+    def referral_search
+      "#{referrals}/search"
+    end
+
+    def base_url
+      sub_domain = @prod ? 'uatup' : 'developer.staging'
+      "https://#{sub_domain}.naccrraware.net/nds-api"
     end
   end
 end
