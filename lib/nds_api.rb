@@ -11,6 +11,7 @@ module NdsApi
     # @param [Hash] options
     # @option options [String] :user NDS User
     # @option options [String] :password NDS Password
+    # @option options [String] :agency_key NDS Agency Key
     #
     # @return [NdsApi::Client] new client instance
 
@@ -31,9 +32,9 @@ module NdsApi
 
     def http_action(method, *args, &block)
       if @method.is_create? or @method.is_search?
-        @http.post(@url.send(@method.action), data)
+        @http.post(url, data)
       elsif @method.is_update?
-        @http.put(@url.send(@method.action), data)
+        @http.put(url, data)
       else
         @http.get(@url.send(method, *args))
       end
@@ -41,6 +42,18 @@ module NdsApi
 
     def data
       @args.include?(:data) ? @args[:data] : @args.first
+    end
+
+    def url
+      if @method.is_search? and query_params
+        @url.send(@method.action, query_params)
+      else
+        @url.send(@method.action)
+      end
+    end
+
+    def query_params
+      @args.count > 1 ? @args[1] : nil
     end
   end
 end

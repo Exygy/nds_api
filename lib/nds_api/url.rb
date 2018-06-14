@@ -72,11 +72,12 @@ module NdsApi
 
     ##### PROVIDERS #####
 
-    def search_providers
+    def search_providers(params=nil)
       # stg_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
       # prod_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
       # @prod ? prod_search : stg_search
-      'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
+      params = URI.encode_www_form(params) if params
+      "http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject#{params ? "?#{params}" : ''}"
     end
 
     def providers
