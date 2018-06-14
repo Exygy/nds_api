@@ -12,7 +12,7 @@ module NdsApi
     def get(url)
       JSON.parse(open(url, http_basic_authentication: [api_user, api_password]).read)
     rescue => e
-      puts "failed #{e}"
+      puts "NDS API GEM: #{e} (#{url})"
       return e
     end
 
@@ -38,7 +38,7 @@ module NdsApi
       response = Net::HTTP.new(url.host, url.port).request(req)
       JSON.parse(response.body)
     rescue => e
-      puts "failed #{e}"
+      puts "NDS API GEM: #{e} (#{post_or_put}:#{url})"
       return e
     end
 

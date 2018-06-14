@@ -1,7 +1,15 @@
 module NdsApi
   class Url
     def initialize(options = { dev: false })
-      @prod = !options[:dev]
+      @options = options
+      @prod = !@options[:dev]
+    end
+
+    ##### Agency #####
+
+    def get_agency_option(type_id=nil)
+      raise 'NDS API GEM: Agency Key required' unless @options[:agency_key]
+      "#{base_url}/agencies/config/options?agencyKey=#{@options[:agency_key]}#{type_id ? "&typeId=#{type_id}" : ''}"
     end
 
     ##### CLIENTS #####

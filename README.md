@@ -22,10 +22,26 @@ Or install it yourself as:
 
 ```ruby
 nds = NdsApi::Client.new(
-    user: 'username',
-    password: '############'
+    user: 'username', #required
+    password: '############', #required
+    agency_key: 123 # optionals
 )
 ```
+
+##### AGENCY
+
+Get Agency Option By Id
+
+```ruby
+nds.get_agency_option(option_id)
+```
+
+
+Required: agency_key param, see usage section.
+
+Will raise 'NDS API GEM: Agency Key required' if Agency Key not specified
+
+Contact NDS to get your agency key.
 
 ##### CLIENT
 
