@@ -29,7 +29,7 @@ module NdsApi
     def http_action(post_or_put, url, data)
       url = URI.parse(url)
       req = http_verb_object(post_or_put).new(
-        url.path,
+        url,
         'Content-Type' => 'application/json'
       )
       req.basic_auth api_user, api_password
