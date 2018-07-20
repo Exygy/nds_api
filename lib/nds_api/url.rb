@@ -73,11 +73,8 @@ module NdsApi
     ##### PROVIDERS #####
 
     def search_providers(params=nil)
-      # stg_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
-      # prod_search = 'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject'
-      # @prod ? prod_search : stg_search
       params = URI.encode_www_form(params) if params
-      "http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com/providers/search/findByCriteriaObject#{params ? "?#{params}" : ''}"
+      "#{providers}/search/findByCriteriaObject#{params ? "?#{params}" : ''}"
     end
 
     def providers
@@ -153,8 +150,11 @@ module NdsApi
     end
 
     def base_url
-      # sub_domain = @prod ? 'uatup' : 'developer.staging'
-      "https://uatup.naccrraware.net/nds-api"
+      if @prod
+        "https://uatup.naccrraware.net/nds-api"
+      else
+        "http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com"
+      end
     end
   end
 end
