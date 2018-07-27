@@ -137,6 +137,14 @@ After checking out the repo, run `bin/setup` to install dependencies. You can al
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+Test GEM
+
+`bin/console`
+
+```ruby
+NdsApi::Client.new(agency_key: 00000, user: 'user', password: 'password', dev: true).provider_by_id(1234)
+```
+
 ## Publication
 
 `bundle exec rake release`
