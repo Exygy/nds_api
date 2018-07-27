@@ -7,8 +7,8 @@ module NdsApi
 
     ##### Agency #####
 
-    def get_agency_option(type_id=nil)
-      raise 'NDS API GEM: Agency Key required' unless @options[:agency_key]
+    def get_agency_option(type_id = nil)
+      raise 'NDS API ERROR: Agency Key required' unless @options[:agency_key]
       "#{base_url}/agencies/config/options?agencyKey=#{@options[:agency_key]}#{type_id ? "&typeId=#{type_id}" : ''}"
     end
 
@@ -72,7 +72,7 @@ module NdsApi
 
     ##### PROVIDERS #####
 
-    def search_providers(params=nil)
+    def search_providers(params = nil)
       params = URI.encode_www_form(params) if params
       "#{providers}/search/findByCriteriaObject#{params ? "?#{params}" : ''}"
     end
@@ -151,9 +151,9 @@ module NdsApi
 
     def base_url
       if @prod
-        "https://uatup.naccrraware.net/nds-api"
+        'https://uatup.naccrraware.net/nds-api'
       else
-        "http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com"
+        'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com'
       end
     end
   end
