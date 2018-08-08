@@ -137,6 +137,22 @@ module NdsApi
 
     private
 
+    # cover: "create_XXXXXX", "update_XXXXXX"
+    def method_missing(method_sym, *arguments, &block)
+      create_prefix = 'create_'
+      update_prefix = 'update_'
+
+      prefix = create_prefix if method_sym[0..create_prefix.length - 1] == create_prefix
+      prefix = update_prefix if method_sym[0..update_prefix.length - 1] == update_prefix
+
+      if method_sym[0..prefix.length - 1] == prefix
+        entities = method_sym[prefix.length..method_sym.length]
+        send(entities)
+      else
+        super
+      end
+    end
+
     def client_search
       "#{clients}/search"
     end

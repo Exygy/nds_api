@@ -69,7 +69,6 @@ nds.client_by_id(id)
 ##### CHILDREN
 
 ```ruby
-
 nds.create_child(data)
 nds.update_child(data)
 
