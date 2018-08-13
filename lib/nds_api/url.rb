@@ -169,7 +169,7 @@ module NdsApi
       if @prod
         'https://uatup.naccrraware.net/nds-api'
       else
-        'http://staging-nds-api-app.emrcsv38cq.us-east-1.elasticbeanstalk.com'
+        'http://api.staging.naccrraware.net'
       end
     end
   end
