@@ -77,6 +77,10 @@ module NdsApi
       "#{providers}/search/findByCriteriaObject#{params ? "?#{params}" : ''}"
     end
 
+    def search_providers_elastic
+      "#{providers}/search"
+    end
+
     def providers
       "#{base_url}/providers"
     end
@@ -107,6 +111,10 @@ module NdsApi
 
     def provider_enrollments(uid)
       "#{providers}/#{uid}/enrollments"
+    end
+
+    def bulk
+      "#{providers}/bulk"
     end
 
     ##### REFERRALS #####
