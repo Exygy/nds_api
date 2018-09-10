@@ -113,7 +113,7 @@ module NdsApi
       "#{providers}/#{uid}/enrollments"
     end
 
-    def bulk
+    def search_providers_bulk
       "#{providers}/bulk"
     end
 

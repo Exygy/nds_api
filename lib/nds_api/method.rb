@@ -38,7 +38,7 @@ module NdsApi
         when 'providers'
           'providers'
         end
-      "#{action}_#{object_type}"
+      "#{action}_#{object_type}#{method_split[2].present? ? "_#{method_split[2]}" : ''}"
     end
 
     private
