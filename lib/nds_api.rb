@@ -12,6 +12,7 @@ module NdsApi
     # @option options [String] :user NDS User
     # @option options [String] :password NDS Password
     # @option options [String] :agency_key NDS Agency Key
+    # @option options [Boolean] :debug
     #
     # @return [NdsApi::Client] new client instance
 
@@ -24,8 +25,10 @@ module NdsApi
     def method_missing(method, *args, &block)
       @method = NdsApi::Method.new(method)
       @args = *args
-      response = http_action(method, *args, &block)
-      NdsApi::Utils.hash_keys_str_to_sym(response)
+      console_debug(step: 1)
+      @response = http_action(method, *args, &block)
+      console_debug(step: 2)
+      NdsApi::Utils.hash_keys_str_to_sym(@response)
     end
 
     private
@@ -36,6 +39,7 @@ module NdsApi
       elsif @method.is_update?
         @http.put(url, data)
       else
+        console_debug(url: @url.send(method, *args))
         @http.get(@url.send(method, *args))
       end
     end
@@ -54,6 +58,23 @@ module NdsApi
 
     def query_params
       @args.count > 1 ? @args[1] : nil
+    end
+
+    def console_debug(params)
+      return unless @options[:debug]
+      if params[:step] == 1
+        params_to_display = @options.dup
+        params_to_display[:password] = 'XXXXXXXXXXXXXXX'
+        puts "NDS API GEM PARAMS: #{params_to_display}"
+        if @method.is_create? || @method.is_search? || @method.is_update?
+          puts "NDS API DEBUG: #{@method.is_update? ? 'PUT' : 'POST'}"
+          puts "NDS API DEBUG: URL: #{url.inspect}"
+        else
+          puts 'NDS API DEBUG: METHOD GET'
+        end
+      end
+      puts "NDS API DEBUG: RESPONSE: #{@response.inspect}" if params[:step] == 2
+      puts "NDS API DEBUG: URL: #{params[:url]}" if params[:url]
     end
   end
 end

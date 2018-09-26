@@ -24,7 +24,9 @@ Or install it yourself as:
 nds = NdsApi::Client.new(
     user: 'username', #required
     password: '############', #required
-    agency_key: 123 # optionals
+    agency_key: 123, # optionals
+    dev: false, # optionals
+    debug: false # optionals
 )
 ```
 
@@ -107,6 +109,7 @@ nds.search_providers(search_params)
 nds.update_provider(data)
 
 nds.providers()
+nds.search_providers_bulk(providerIds: [123, 234, 345])
 nds.provider_by_uid(uid)      
 nds.provider_by_id(id)      
 nds.providers_by_center_name(center_name)      
@@ -141,7 +144,7 @@ Test GEM
 `bin/console`
 
 ```ruby
-NdsApi::Client.new(agency_key: 00000, user: 'user', password: 'password', dev: true).provider_by_id(1234)
+NdsApi::Client.new(agency_key: 00000, user: 'user', password: 'password', dev: true, debug: true).provider_by_id(1234)
 ```
 
 ## Publication
