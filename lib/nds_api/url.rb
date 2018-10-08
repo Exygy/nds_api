@@ -175,9 +175,9 @@ module NdsApi
 
     def base_url
       if @prod
-        'https://uatup.naccrraware.net/nds-api'
+        'https://api.naccrraware.net'
       else
-        'http://api.staging.naccrraware.net'
+        'https://api.staging.naccrraware.net'
       end
     end
   end
