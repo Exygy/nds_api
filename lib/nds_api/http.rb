@@ -33,7 +33,7 @@ module NdsApi
         'Content-Type' => 'application/json'
       )
       req.basic_auth api_user, api_password
-      # req.use_ssl = true
+      req.use_ssl = true
       req.body = data.to_json
       response = Net::HTTP.new(url.host, url.port).request(req)
       JSON.parse(response.body)
