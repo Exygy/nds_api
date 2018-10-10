@@ -33,9 +33,10 @@ module NdsApi
         'Content-Type' => 'application/json'
       )
       req.basic_auth api_user, api_password
-      req.use_ssl = true
       req.body = data.to_json
-      response = Net::HTTP.new(url.host, url.port).request(req)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      response = http.request(req)
       JSON.parse(response.body)
     rescue StandardError => error
       puts "NDS API ERROR: #{error} (#{post_or_put}:#{url})"
