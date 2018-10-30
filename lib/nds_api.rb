@@ -2,6 +2,7 @@ require 'nds_api/http'
 require 'nds_api/method'
 require 'nds_api/url'
 require 'nds_api/utils'
+require 'nds_api/validator'
 require 'nds_api/version'
 
 module NdsApi
@@ -25,6 +26,9 @@ module NdsApi
     def method_missing(method, *args, &block)
       @method = NdsApi::Method.new(method)
       @args = *args
+
+      validate_search_providers_params!
+
       console_debug(step: 1)
       @response = http_action(method, *args, &block)
       console_debug(step: 2)
@@ -60,6 +64,12 @@ module NdsApi
       @args.count > 1 ? @args[1] : nil
     end
 
+    def validate_search_providers_params!
+      return unless @method.is_search_providers?
+      console_debug(action: 'search_providers - validating params')
+      NdsApi::Validator.validate_search_providers_params!(data)
+    end
+
     def console_debug(params)
       return unless @options[:debug]
       if params[:step] == 1
@@ -75,6 +85,7 @@ module NdsApi
       end
       puts "NDS API DEBUG: RESPONSE: #{@response.inspect}" if params[:step] == 2
       puts "NDS API DEBUG: URL: #{params[:url]}" if params[:url]
+      puts "NDS API DEBUG: ACTION: #{params[:action]}" if params[:action]
     end
   end
 end

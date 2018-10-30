@@ -21,6 +21,10 @@ module NdsApi
       @method.include? 'search'
     end
 
+    def is_search_providers?
+      @method.include? 'search_providers'
+    end
+
     def action
       action = method_split[0]
       object_type =
@@ -38,7 +42,7 @@ module NdsApi
         when 'providers'
           'providers'
         end
-      "#{action}_#{object_type}#{method_split[2].present? ? "_#{method_split[2]}" : ''}"
+      "#{action}_#{object_type}#{method_split[2] ? "_#{method_split[2]}" : ''}"
     end
 
     private
