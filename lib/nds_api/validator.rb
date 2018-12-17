@@ -53,7 +53,8 @@ module NdsApi
            rotating
            openHolidays
            tempEmergency
-           open24Hours]
+           open24Hours
+           providerIds]
       end
     end
   end
