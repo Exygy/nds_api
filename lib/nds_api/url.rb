@@ -93,6 +93,11 @@ module NdsApi
       "#{base_url}/providers/search/findByProviderId?providerId=#{id}"
     end
 
+    def providers_by_owner_or_center_name(params)
+      params = URI.encode_www_form(params) if params
+      "#{provider_search}/findByOwnerOrCenterName#{params ? "?#{params}" : ''}"
+    end
+
     def providers_by_center_name(center_name)
       "#{provider_search}/findByCenterName?centerName=#{center_name}"
     end
