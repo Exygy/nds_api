@@ -46,6 +46,7 @@ module NdsApi
           openHolidays
           providerIds
           rotating
+          shiftLocal1
           shiftType
           tempEmergency
           totalVacancies
